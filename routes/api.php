@@ -30,7 +30,7 @@ Route::group(['middleware' => ['auth:client']], function (){
     Route::get('/wallet', [walletController::class, 'index']);
 
     Route::get('/payment/gateways', [paymentGatewayController::class, 'index']);
-        Route::get('/currencies', [currencyController::class, 'index']);
+    Route::get('/currencies', [currencyController::class, 'index']);
 
     Route::post('/deposit', [transactionController::class, 'deposit'])->middleware(['multi_currency']);
     Route::post('/withdraw', [transactionController::class, 'withdrawal']);

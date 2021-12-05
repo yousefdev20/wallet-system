@@ -9,7 +9,7 @@ class PaymentGateway extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'image', 'max_deposit', 'min_deposit', 'max_withdraw', 'max_withdraw', 'allow_currency'];
+    protected $fillable = ['name', 'image', 'max_deposit', 'min_deposit', 'max_withdraw', 'max_withdraw', 'min_withdraw', 'allow_currency'];
 
 
 }

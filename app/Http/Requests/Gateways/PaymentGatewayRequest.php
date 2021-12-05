@@ -24,8 +24,8 @@ class PaymentGatewayRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-            'image' => 'required|mimes:jpg,bmp,png,jpeg,jpg,jpe,svg|size:3000',
+            'name' => 'required|string|unique:payment_gateways',
+            'image' => 'required|mimes:jpg,bmp,png,jpeg,jpg,jpe,svg|max:30000000',
             'allow_currency' => 'required|boolean',
             'min_deposit' => 'required|numeric|min:0|max:1000000',
             'max_deposit' => 'required|numeric|min:0|max:1000000',

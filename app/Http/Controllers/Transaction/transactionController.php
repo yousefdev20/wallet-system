@@ -9,6 +9,7 @@ use App\Http\Requests\Transaction\WithdrawRequest;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class transactionController extends Controller {
 
@@ -54,5 +55,18 @@ class transactionController extends Controller {
         $transactions = auth()->user()->transactions()->simplePaginate(5);
 
         return $this->response(['data' => compact('transactions')]);
+    }
+
+    public function chart() {
+
+        return $this->response(['data' => Transaction::query()
+            ->select(
+                DB::raw('DATE(created_at) as day'),
+                DB::raw('SUM(amount) as sum'),
+                'type'
+            )
+            ->groupBy('day', 'type')
+            ->get()
+        ]);
     }
 }

@@ -1,66 +1,131 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# wallet-system
 
-## About Laravel
+``` 
+PHP -v  ~7.4.16
+Laravel -v 5.8.38
+Laravel Sunctum package
+Vue -v 3.0
+ ```
+###Maintainer
+```
+(Yousef)
+```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Implementation Note
+```
+wallet service to make every thing readable testable cleanable
+i developed facade class (WalletFacade), which take the own implementation
+from base method inside wallet model.
+now we have two main action (withdraw, deposit).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+#simple way
+WalletFacade::deposit(amount);
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+#simple way
+WalletFacade::withdraw(amount);
 
-## Learning Laravel
+UnacceptedTransactionException
+Exception to inform when Exception catched it UnacceptedTransactionException and reportd on log,
+render default message for user.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Observer design pattern 
+1. WalletObserver
+2. TransactionObserver
+3. UserObserver
+4. PaymentGatewayObserver
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+how the wallet created?
+when the user regester through regester page the user observer class listen any action from user
+after that the application will create new wallet. 
 
-## Laravel Sponsors
+Configration file i create constants file to declear main const variable.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Middleware CheckPaymentIsMultiCurrency
+this middleware work as a pipeline when the admin choose multi currency when transaction 
+this class will convert to correct value.
 
-### Premium Partners
+Validation
+every validation class located inside request classes.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-- **[Romega Software](https://romegasoftware.com)**
+node we have dynamic validation on DepositRequest class
+because every payment gateway have defirrent configration.   
 
-## Contributing
+Requests
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Guards
+we have two guard (admin, client)
 
-## Code of Conduct
+Routes
+I created new route file (admin) to store in seperate way all admin requests.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Database
+I created new ER digram to show database procces located inside database directory
 
-## Security Vulnerabilities
+regarding design (front-end) i am already build application and move it on this application 
+the desgin located on (fronend branch).     
+```
+###Note
+```
+I had added the docker service on this application to service every service via docker,
+below there are all services we are used in this project. (docker optional not mandatory)
+```
+### Services
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+1. PHP -v ~7.4 (with all php extenstion)
+2. mysql -v 8.0
+3. supervisord or any web service
+4. redis server, or local driver
+```
 
-## License
+### Front-end Services
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+1. Vue-cli -v 3.0
+2. Vuex
+3. VueRouter
+4. Apexcharts
+```
+
+#### you can use artisan command on server what is useful artisan command in laravel (high recommend)
+``` bash
+1. clean cache, view, routes, config type:
+   php artisan optimize:clear
+2. clear the logs files. (custom command)
+you can use this options (--file, --from) optional
+   php artisan log:clear
+3. composer dump-autoload
+4. to push the data type this command make sure type the previous command before. 
+    php artisan db:seed
+4. to migrate database type this command. (just in first time)
+   php artisan migrate
+5. if do you like take backup from database structure type this command.
+   php artisan migrate:generate
+6. store all config file, routing, view, cache. (high recommend)
+   php artisan route:cache
+   php artisan config:cache
+   php artisan view:cache
+
+--if we have new files or new class (service provider) to serve this application such as mail, seeder, etc...   
+(composer dump-autoload)
+--if do you like upgrade packages and laravel framework. (danger command in production)  
+(composer update)
+--if you dont have vendor directory in production type this command:
+(composer install)
+--if PHP version not compatible with your platform type this command instead of:
+(composer install--ignore-platform-reqs)
+--if the node_modal does not exist, or do you want develop new feature in production.
+npm install
+### serve application on any empty port.
+
+```
+###Docker command
+```
+```
+
+### Finally type this command (all in one) 
+just when use docker
+```
+make 
+```

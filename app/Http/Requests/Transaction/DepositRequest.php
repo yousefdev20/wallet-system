@@ -2,11 +2,8 @@
 
 namespace App\Http\Requests\Transaction;
 
-use App\Models\Gateways\Currency;
 use App\Models\Gateways\PaymentGateway;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class DepositRequest extends FormRequest
 {

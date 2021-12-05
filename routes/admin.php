@@ -22,11 +22,13 @@ Route::post('/login', [LoginController::class, 'login']);
 
 Route::group(['middleware' => ['auth:admin']], function (){
 
+    Route::get('/payment/gateways', [paymentGatewayController::class, 'index']);
     Route::post('/gateway/create', [paymentGatewayController::class, 'create']);
 
     Route::get('/transactions', [transactionController::class, 'index']);
     Route::put('/transaction/accept/{transaction}', [transactionController::class, 'approve']);
     Route::put('/transaction/reject/{transaction}', [transactionController::class, 'reject']);
+    Route::get('/transaction/chart', [transactionController::class, 'chart']);
 
     Route::get('/accounts', [accountController::class, 'index']);
     Route::delete('/account/delete/{user}', [accountController::class, 'delete']);

@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Gateways\PaymentGateway;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Wallet;
+use App\Observers\PaymentGatewayObserver;
 use App\Observers\TransactionObserver;
 use App\Observers\UserObserver;
 use App\Observers\WalletObserver;
@@ -36,5 +38,6 @@ class EventServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Wallet::observe(WalletObserver::class);
         Transaction::observe(TransactionObserver::class);
+        PaymentGateway::observe(PaymentGatewayObserver::class);
     }
 }
