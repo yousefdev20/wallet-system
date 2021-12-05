@@ -1,30 +1,41 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div style="background: #f0f2f5 !important; height: 100vh">
+    <div v-if="!$route.meta.isRoot">
+      <template v-if="!$route.meta.public">
+        <app-drawer />
+        <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg" style="margin-inline-start: 17.125rem">
+          <app-navbar></app-navbar>
+          <div class="container-fluid py-4">
+            <router-view :key="$route.fullPath"></router-view>
+          </div>
+        </main>
+      </template>
+      <template v-else>
+        <router-view :key="$route.fullpath"></router-view>
+      </template>
+    </div>
+    <div v-else>
+      <app-drawer-admin />
+      <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg" style="margin-inline-start: 17.125rem">
+        <app-navbar-admin></app-navbar-admin>
+        <div class="container-fluid py-4">
+          <router-view :key="$route.fullPath"></router-view>
+        </div>
+      </main>
+    </div>
+    <notifications position="bottom right" type="success"/>
   </div>
-  <router-view/>
 </template>
+<script>
+import AppDrawer from "./components/client/appDrawer";
+import AppNavbar from "./components/client/appNavbar";
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+import AppDrawerAdmin from "./components/admin/appDrawer";
+import AppNavbarAdmin from "./components/admin/appNavbar";
 
-#nav {
-  padding: 30px;
-}
+require('../public/assets/css/material-dashboard.min.css')
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+export default {
+  components: {AppDrawer, AppNavbar, AppDrawerAdmin, AppNavbarAdmin}
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+</script>
